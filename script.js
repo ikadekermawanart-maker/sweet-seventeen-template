@@ -50,6 +50,22 @@ function coverDateParts(value) {
   return { day, date: shortDate };
 }
 
+function detailDateParts(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || "")) {
+    return { weekday: "-", day: "-", month: "-", year: "-" };
+  }
+
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  return {
+    weekday: new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(date),
+    day: String(day).padStart(2, "0"),
+    month: new Intl.DateTimeFormat("en-US", { month: "long" }).format(date),
+    year: String(year)
+  };
+}
+
 function cleanCoverName(event) {
   const raw = String(event.main_name || event.event_title || "").trim();
   if (!raw) return "VIONA";
@@ -170,6 +186,13 @@ async function loadEvent() {
     setText("subtitle", event.subtitle);
     setText("description", event.description);
     setText("eventDate", prettyDate(event.event_date));
+
+    const detailDate = detailDateParts(event.event_date);
+    setText("detailWeekday", detailDate.weekday);
+    setText("detailDay", detailDate.day);
+    setText("detailMonth", detailDate.month);
+    setText("detailYear", detailDate.year);
+
     setText("eventTime", event.event_time ? `${event.event_time} WITA` : "-");
     setText("eventLocation", event.location, "-");
 
