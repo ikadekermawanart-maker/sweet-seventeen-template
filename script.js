@@ -159,6 +159,13 @@ async function loadEvent() {
     const coverDate = coverDateParts(event.event_date);
     setText("coverDay", coverDate.day);
     setText("coverDateShort", coverDate.date);
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(event.event_date || "")) {
+      const [iy, im, id] = event.event_date.split("-");
+      setText("introDay", id);
+      setText("introMonth", im);
+      setText("introYear", iy);
+    }
     setText("closingName", event.main_name, event.event_title);
     setText("subtitle", event.subtitle);
     setText("description", event.description);
