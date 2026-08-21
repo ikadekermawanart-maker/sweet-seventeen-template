@@ -74,8 +74,8 @@ button{cursor:pointer}
 .cover-number{
   position:absolute;
   right:10px;
-  top:-118px;
-  font:400 clamp(118px,34vw,220px)/.78 Georgia,serif;
+  top:-126px;
+  font:400 clamp(138px,36vw,235px)/.78 Georgia,serif;
   letter-spacing:-.08em;
   color:rgba(255,255,255,.18);
   pointer-events:none;
@@ -92,9 +92,15 @@ button{cursor:pointer}
   position:relative;
   max-width:760px;
   margin:0 0 18px;
-  font:400 clamp(64px,18vw,126px)/.82 Georgia,serif;
-  letter-spacing:-.055em;
+  font:400 clamp(54px,13vw,96px)/.88 Georgia,serif;
+  letter-spacing:-.045em;
   text-transform:uppercase;
+}
+.cover-event-title{
+  position:relative;
+  margin:-8px 0 18px;
+  font:400 16px/1.3 Georgia,serif;
+  opacity:.82;
 }
 .cover-date{
   display:flex;
@@ -112,9 +118,9 @@ button{cursor:pointer}
   font:400 17px/1.2 Georgia,serif;
 }
 .guest-card{
-  width:min(100%,300px);
-  margin:0 0 14px;
-  padding:12px 14px;
+  width:min(100%,260px);
+  margin:0 0 12px;
+  padding:10px 13px;
   border:1px solid rgba(255,255,255,.24);
   border-radius:16px;
   background:rgba(255,255,255,.07);
@@ -481,8 +487,10 @@ button{cursor:pointer}
 
 @media(max-width:700px){
   .cover{min-height:760px}
-  .cover-number{top:-100px;right:8px;font-size:clamp(118px,39vw,170px)}
-  .cover h1{font-size:clamp(62px,19vw,92px)}
+  .cover-number{top:-112px;right:8px;font-size:clamp(138px,38vw,180px)}
+  .cover h1{font-size:clamp(54px,15vw,76px)}
+  .cover-main{padding-bottom:22px}
+  .cover-event-title{font-size:14px;margin-top:-4px}
   .section{padding:68px 14px}
   .count-grid{grid-template-columns:repeat(2,1fr)}
   .event-row{grid-template-columns:42px 1fr;padding:20px 16px}

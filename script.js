@@ -50,6 +50,21 @@ function coverDateParts(value) {
   return { day, date: shortDate };
 }
 
+function cleanCoverName(event) {
+  const raw = String(event.main_name || event.event_title || "").trim();
+  if (!raw) return "VIONA";
+
+  // If the stored "main name" accidentally contains a birthday title,
+  // strip common birthday wording so the cover remains name-focused.
+  const stripped = raw
+    .replace(/\b\d+(st|nd|rd|th)?\b/gi, " ")
+    .replace(/\b(sweet\s*seventeen|birthday|birthday party|party)\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return (stripped || raw).toUpperCase();
+}
+
 function startCountdown(dateString, timeString) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString || "")) {
     setText("countdownStatus", "Tanggal acara belum ditentukan.");
@@ -137,7 +152,8 @@ async function loadEvent() {
 
     setText("eventLabel", event.event_label, "Sweet Seventeen");
     setText("eventTitle", event.event_title, "Sweet Seventeen");
-    setText("coverName", event.main_name, event.event_title);
+    setText("coverName", cleanCoverName(event), "VIONA");
+    setText("coverEventTitle", event.event_label || "Sweet Seventeen", "Sweet Seventeen");
     setText("mainName", event.main_name, event.event_title);
 
     const coverDate = coverDateParts(event.event_date);
