@@ -291,6 +291,10 @@ async function loadComments() {
   }
 }
 
+$("commentMessage").addEventListener("input", () => {
+  setText("messageCount", `${$("commentMessage").value.length} / 500`);
+});
+
 $("commentForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -321,6 +325,7 @@ $("commentForm").addEventListener("submit", async (event) => {
     }
 
     $("commentMessage").value = "";
+    setText("messageCount", "0 / 500");
     setText("formStatus", "Ucapan berhasil dikirim.");
     await loadComments();
 

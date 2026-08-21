@@ -205,40 +205,54 @@
 
       <!-- WISHES -->
       <section class="section wishes">
-        <div class="section-head centered">
-          <p class="micro-label">Messages</p>
-          <h2>Leave a little love</h2>
-          <p class="section-description">
+        <div class="wishes-inner">
+          <div class="wishes-heading">
+            <div>
+              <p class="micro-label">Messages</p>
+              <h2>Leave a<br>little love</h2>
+            </div>
+            <span class="wishes-mark" aria-hidden="true">✦</span>
+          </div>
+
+          <p class="wishes-intro">
             Tulis sedikit ucapan untuk membuat hari ini semakin berkesan.
           </p>
-        </div>
 
-        <div class="wish-card">
-          <form id="commentForm">
-            <label>
-              <span>Nama</span>
-              <input id="commentName" maxlength="80" required>
-            </label>
+          <div class="wish-card">
+            <form id="commentForm">
+              <div class="field">
+                <label for="commentName">Nama</label>
+                <input id="commentName" maxlength="80" required autocomplete="name">
+              </div>
 
-            <label>
-              <span>Ucapan</span>
-              <textarea id="commentMessage" maxlength="500" required placeholder="Tulis ucapanmu di sini..."></textarea>
-            </label>
+              <div class="field">
+                <label for="commentMessage">Ucapan</label>
+                <textarea id="commentMessage" maxlength="500" required placeholder="Tulis ucapanmu di sini..."></textarea>
+                <div class="field-foot">
+                  <span>For Viona ♡</span>
+                  <span id="messageCount">0 / 500</span>
+                </div>
+              </div>
 
-            <button type="submit" class="pill-btn dark-btn">Kirim Ucapan</button>
-            <p id="formStatus" class="form-status" aria-live="polite"></p>
-          </form>
-        </div>
+              <button type="submit" class="wish-submit">
+                <span>Kirim Ucapan</span>
+                <span aria-hidden="true">→</span>
+              </button>
 
-        <div class="comments-header">
-          <div>
-            <span class="micro-label">From Friends</span>
-            <h3>Ucapan Tamu</h3>
+              <p id="formStatus" class="form-status" aria-live="polite"></p>
+            </form>
           </div>
-          <span id="commentCount" class="comment-count">0 ucapan</span>
-        </div>
 
-        <div id="comments" class="comments"></div>
+          <div class="comments-header">
+            <div>
+              <span class="micro-label">From Friends</span>
+              <h3>Ucapan Tamu</h3>
+            </div>
+            <span id="commentCount" class="comment-count">0 ucapan</span>
+          </div>
+
+          <div id="comments" class="comments"></div>
+        </div>
       </section>
 
       <!-- CLOSING -->
