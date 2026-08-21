@@ -1,11 +1,190 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sweet Seventeen Invitation</title><link rel="stylesheet" href="/style.css"></head><body>
-<main>
-<section class="cover"><img id="coverImage" class="cover-photo" alt="Foto utama"><div class="shade"></div><div class="cover-inner"><p id="eventLabel" class="eyebrow">Sweet Seventeen</p><p class="kicker">You're invited to celebrate</p><h1 id="eventTitle">Sweet Seventeen</h1><p class="guest-label">Kepada Yth.</p><h2 id="guestName">Tamu Undangan</h2><button id="openInvitation">Buka Undangan</button></div></section>
-<div id="content" class="hidden">
-<section class="section intro"><p class="eyebrow dark">Finally Seventeen</p><h3 id="mainName">Vio</h3><p id="subtitle" class="subtitle"></p><p id="description" class="description"></p></section>
-<section class="section countdown"><p class="eyebrow">Save The Date</p><h3>Countdown to the moment</h3><div class="count-grid"><div><strong id="days">00</strong><span>Hari</span></div><div><strong id="hours">00</strong><span>Jam</span></div><div><strong id="minutes">00</strong><span>Menit</span></div><div><strong id="seconds">00</strong><span>Detik</span></div></div><p id="countdownStatus"></p></section>
-<section class="section details"><p class="eyebrow dark">Event Details</p><h3>Let’s make it unforgettable</h3><div class="detail-grid"><article><small>01</small><p>Tanggal</p><strong id="eventDate">-</strong></article><article><small>02</small><p>Waktu</p><strong id="eventTime">-</strong></article><article><small>03</small><p>Lokasi</p><strong id="eventLocation">-</strong></article></div></section>
-<section id="gallerySection" class="section hidden"><p class="eyebrow dark">Moments</p><h3 class="section-title">Little frames, big memories</h3><div id="gallery" class="gallery"></div></section>
-<section class="section wishes"><p class="eyebrow dark">Messages</p><h3 class="section-title">Leave a little love</h3><form id="commentForm"><label>Nama<input id="commentName" maxlength="80" required></label><label>Ucapan<textarea id="commentMessage" maxlength="500" required></textarea></label><button type="submit">Kirim Ucapan</button><p id="formStatus"></p></form><div class="comments-head"><h4>Ucapan Tamu</h4><span id="commentCount">0 ucapan</span></div><div id="comments"></div></section>
-<section class="closing"><img id="closingImage" class="cover-photo" alt="Foto penutup"><div class="shade"></div><div class="closing-inner"><p class="eyebrow">See You There</p><h3 id="closingName">Vio</h3><p>Terima kasih sudah jadi bagian dari momen spesial ini.</p></div></section>
-</div></main><script src="/script.js"></script></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6efe8">
+  <title>Sweet Seventeen Invitation</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="site">
+
+    <!-- COVER -->
+    <section class="cover">
+      <img id="coverImage" class="cover-photo" alt="Foto utama acara">
+      <div class="cover-overlay"></div>
+
+      <div class="cover-top">
+        <span id="eventLabel" class="micro-label light">Sweet Seventeen</span>
+        <span class="cover-number">17</span>
+      </div>
+
+      <div class="cover-main">
+        <p class="cover-kicker">You're invited to celebrate</p>
+        <h1 id="eventTitle">Viona's Sweet Seventeen</h1>
+
+        <div class="guest-card">
+          <span>Kepada Yth.</span>
+          <strong id="guestName">Tamu Undangan</strong>
+        </div>
+
+        <button id="openInvitation" class="pill-btn light-btn">
+          Buka Undangan
+        </button>
+      </div>
+
+      <div class="cover-foot">
+        <span>Scroll</span>
+        <span>↓</span>
+      </div>
+    </section>
+
+    <div id="content" class="hidden">
+
+      <!-- OPENING -->
+      <section class="section opening">
+        <div class="editorial-17" aria-hidden="true">17</div>
+        <p class="micro-label">Finally Seventeen</p>
+        <h2 id="mainName">VIONA</h2>
+        <p id="subtitle" class="opening-subtitle">Celebrating Seventeen</p>
+        <p id="description" class="opening-copy"></p>
+      </section>
+
+      <!-- COUNTDOWN -->
+      <section class="section countdown">
+        <div class="section-head light-head">
+          <p class="micro-label light">Save The Date</p>
+          <h2>Countdown to<br>the moment</h2>
+        </div>
+
+        <div class="count-grid">
+          <div class="count-box">
+            <strong id="days">00</strong>
+            <span>Hari</span>
+          </div>
+          <div class="count-box">
+            <strong id="hours">00</strong>
+            <span>Jam</span>
+          </div>
+          <div class="count-box">
+            <strong id="minutes">00</strong>
+            <span>Menit</span>
+          </div>
+          <div class="count-box">
+            <strong id="seconds">00</strong>
+            <span>Detik</span>
+          </div>
+        </div>
+
+        <p id="countdownStatus" class="count-status"></p>
+      </section>
+
+      <!-- EVENT DETAILS -->
+      <section class="section details">
+        <div class="section-head">
+          <p class="micro-label">Event Details</p>
+          <h2>See you<br>at the party</h2>
+        </div>
+
+        <div class="event-panel">
+          <div class="event-row">
+            <span class="event-index">01</span>
+            <div>
+              <small>Tanggal</small>
+              <strong id="eventDate">-</strong>
+            </div>
+          </div>
+
+          <div class="event-row">
+            <span class="event-index">02</span>
+            <div>
+              <small>Waktu</small>
+              <strong id="eventTime">-</strong>
+            </div>
+          </div>
+
+          <div class="event-row location-row">
+            <span class="event-index">03</span>
+            <div>
+              <small>Lokasi</small>
+              <strong id="eventLocation">-</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STATEMENT PHOTO -->
+      <section id="statementPhotoSection" class="statement-photo hidden">
+        <img id="statementPhoto" alt="Foto momen spesial">
+        <div class="statement-overlay"></div>
+        <div class="statement-copy">
+          <span class="micro-label light">One Night</span>
+          <h2>Good vibes.<br>Good people.<br>Good memories.</h2>
+        </div>
+      </section>
+
+      <!-- GALLERY -->
+      <section id="gallerySection" class="section gallery-section hidden">
+        <div class="section-head">
+          <p class="micro-label">Moments</p>
+          <h2>Little frames,<br>big memories</h2>
+        </div>
+        <div id="gallery" class="editorial-gallery"></div>
+      </section>
+
+      <!-- WISHES -->
+      <section class="section wishes">
+        <div class="section-head centered">
+          <p class="micro-label">Messages</p>
+          <h2>Leave a little love</h2>
+          <p class="section-description">
+            Tulis sedikit ucapan untuk membuat hari ini semakin berkesan.
+          </p>
+        </div>
+
+        <div class="wish-card">
+          <form id="commentForm">
+            <label>
+              <span>Nama</span>
+              <input id="commentName" maxlength="80" required>
+            </label>
+
+            <label>
+              <span>Ucapan</span>
+              <textarea id="commentMessage" maxlength="500" required placeholder="Tulis ucapanmu di sini..."></textarea>
+            </label>
+
+            <button type="submit" class="pill-btn dark-btn">Kirim Ucapan</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="comments-header">
+          <div>
+            <span class="micro-label">From Friends</span>
+            <h3>Ucapan Tamu</h3>
+          </div>
+          <span id="commentCount" class="comment-count">0 ucapan</span>
+        </div>
+
+        <div id="comments" class="comments"></div>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="closing">
+        <img id="closingImage" class="closing-photo" alt="Foto penutup">
+        <div class="closing-overlay"></div>
+        <div class="closing-content">
+          <p class="micro-label light">See You There</p>
+          <h2 id="closingName">VIONA</h2>
+          <p>Terima kasih sudah jadi bagian dari momen spesial ini.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
