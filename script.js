@@ -192,6 +192,9 @@ async function loadEvent() {
       setText("introDay", id);
       setText("introMonth", im);
       setText("introYear", iy);
+      setText("closingDay", id);
+      setText("closingMonth", im);
+      setText("closingYear", iy);
     }
     setText("closingName", event.main_name, event.event_title);
     setText("subtitle", event.subtitle);
