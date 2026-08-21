@@ -131,24 +131,35 @@ function renderGallery(items) {
   }
 
   gallerySection.classList.remove("hidden");
+  setText("galleryCount", String(valid.length).padStart(2, "0"));
 
-  valid.forEach((url) => {
+  if (valid.length === 1) {
+    gallery.dataset.count = "1";
+  } else if (valid.length === 2) {
+    gallery.dataset.count = "2";
+  } else if (valid.length === 3) {
+    gallery.dataset.count = "3";
+  } else {
+    gallery.dataset.count = "many";
+  }
+
+  valid.forEach((url, index) => {
     const figure = document.createElement("figure");
     const img = document.createElement("img");
 
     img.src = url;
-    img.alt = "Foto Sweet Seventeen";
+    img.alt = `Foto Sweet Seventeen ${index + 1}`;
     img.loading = "lazy";
 
     figure.appendChild(img);
     gallery.appendChild(figure);
   });
 
-  // Use first gallery photo as statement photo
+  // Hero statement photo uses the first gallery image.
   $("statementPhoto").src = valid[0];
   $("statementPhotoSection").classList.remove("hidden");
 
-  // Use last gallery photo as closing photo
+  // Closing uses the last gallery image.
   $("closingImage").src = valid[valid.length - 1];
   $("closingImage").style.display = "block";
 }
