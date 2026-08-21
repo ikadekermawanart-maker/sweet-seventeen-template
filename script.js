@@ -210,6 +210,17 @@ async function loadEvent() {
     setText("eventTime", event.event_time ? `${event.event_time} WITA` : "-");
     setText("eventLocation", event.location, "-");
 
+    const mapsButton = $("mapsButton");
+    const mapsUrl = String(event.maps_url || "").trim();
+
+    if (/^https?:\/\//i.test(mapsUrl)) {
+      mapsButton.href = mapsUrl;
+      mapsButton.classList.remove("hidden");
+    } else {
+      mapsButton.removeAttribute("href");
+      mapsButton.classList.add("hidden");
+    }
+
     if (event.cover_url) {
       $("coverImage").src = event.cover_url;
       $("coverImage").style.display = "block";

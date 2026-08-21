@@ -441,6 +441,34 @@ button{cursor:pointer}
   font-size:11px;
   letter-spacing:.02em;
 }
+.maps-button{
+  width:max-content;
+  min-width:154px;
+  margin-top:18px;
+  padding:12px 16px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:28px;
+  border:1px solid var(--ink);
+  border-radius:999px;
+  color:var(--ink);
+  text-decoration:none;
+  font-size:10px;
+  letter-spacing:.08em;
+  transition:background .2s ease,color .2s ease;
+}
+.maps-button:hover{
+  background:var(--ink);
+  color:#fff;
+}
+.maps-button span:last-child{
+  font-size:16px;
+  line-height:1;
+}
+.maps-button.hidden{
+  display:none;
+}
 
 /* STATEMENT PHOTO */
 .statement-photo{
