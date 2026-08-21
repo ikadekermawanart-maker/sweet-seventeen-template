@@ -30,6 +30,26 @@ function prettyDate(value) {
   }).format(new Date(Date.UTC(y, m - 1, d)));
 }
 
+function coverDateParts(value) {
+  if (!value) return { day: "-", date: "-" };
+  const [y, m, d] = value.split("-").map(Number);
+  if (!y || !m || !d) return { day: "-", date: value };
+
+  const date = new Date(Date.UTC(y, m - 1, d));
+
+  const day = new Intl.DateTimeFormat("en-US", {
+    weekday: "long"
+  }).format(date);
+
+  const shortDate = new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).format(date);
+
+  return { day, date: shortDate };
+}
+
 function startCountdown(dateString, timeString) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString || "")) {
     setText("countdownStatus", "Tanggal acara belum ditentukan.");
@@ -117,7 +137,12 @@ async function loadEvent() {
 
     setText("eventLabel", event.event_label, "Sweet Seventeen");
     setText("eventTitle", event.event_title, "Sweet Seventeen");
+    setText("coverName", event.main_name, event.event_title);
     setText("mainName", event.main_name, event.event_title);
+
+    const coverDate = coverDateParts(event.event_date);
+    setText("coverDay", coverDate.day);
+    setText("coverDateShort", coverDate.date);
     setText("closingName", event.main_name, event.event_title);
     setText("subtitle", event.subtitle);
     setText("description", event.description);
