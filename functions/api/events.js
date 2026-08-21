@@ -26,6 +26,7 @@ export async function onRequestGet(context) {
       event_date,
       event_time,
       location,
+      maps_url,
       description,
       cover_url,
       gallery_urls,
