@@ -32,8 +32,6 @@ async function tryPlayMusic() {
 $("openInvitation").addEventListener("click", async () => {
   $("content").classList.remove("hidden");
   $("content").scrollIntoView({ behavior: "smooth" });
-
-  // Browser mengizinkan audio karena ini dipicu langsung oleh klik pengguna.
   await tryPlayMusic();
 });
 
@@ -201,35 +199,56 @@ function renderGallery(items) {
   $("closingImage").style.display = "block";
 }
 
+function normalizeDressItems(value) {
+  if (!Array.isArray(value)) return [];
 
-function validDressColors(value) {
-  return Array.isArray(value)
-    ? value
-        .map((color) => String(color || "").trim())
-        .filter((color) => /^#[0-9a-f]{6}$/i.test(color))
-        .slice(0, 6)
-    : [];
+  return value.map((item) => {
+    if (typeof item === "string") {
+      const color = String(item || "").trim().toUpperCase();
+      return /^#[0-9A-F]{6}$/.test(color)
+        ? { color, name: "" }
+        : null;
+    }
+
+    if (item && typeof item === "object") {
+      const color = String(item.color || "").trim().toUpperCase();
+      const name = String(item.name || "").trim().slice(0, 40);
+
+      return /^#[0-9A-F]{6}$/.test(color)
+        ? { color, name }
+        : null;
+    }
+
+    return null;
+  }).filter(Boolean).slice(0, 6);
 }
 
-function renderDressPalette(id, colors) {
+function renderDressPalette(id, items) {
   const wrap = $(id);
   wrap.replaceChildren();
 
-  colors.forEach((color) => {
-    const dot = document.createElement("span");
+  items.forEach((item) => {
+    const chip = document.createElement("span");
+    chip.className = "dress-color-chip";
+
+    const dot = document.createElement("i");
     dot.className = "dress-color";
-    dot.style.backgroundColor = color;
-    dot.title = color.toUpperCase();
-    dot.setAttribute("aria-label", `Warna ${color.toUpperCase()}`);
-    wrap.appendChild(dot);
+    dot.style.backgroundColor = item.color;
+
+    const label = document.createElement("span");
+    label.className = "dress-color-name";
+    label.textContent = item.name || item.color.toUpperCase();
+
+    chip.append(dot, label);
+    wrap.appendChild(chip);
   });
 }
 
 function renderDressCode(event) {
   const title = String(event.dresscode_title || "").trim();
   const note = String(event.dresscode_note || "").trim();
-  const maleColors = validDressColors(event.dresscode_male_colors);
-  const femaleColors = validDressColors(event.dresscode_female_colors);
+  const maleColors = normalizeDressItems(event.dresscode_male_colors);
+  const femaleColors = normalizeDressItems(event.dresscode_female_colors);
 
   const hasDressCode =
     Boolean(title || note || maleColors.length || femaleColors.length);
