@@ -201,6 +201,67 @@ function renderGallery(items) {
   $("closingImage").style.display = "block";
 }
 
+
+function validDressColors(value) {
+  return Array.isArray(value)
+    ? value
+        .map((color) => String(color || "").trim())
+        .filter((color) => /^#[0-9a-f]{6}$/i.test(color))
+        .slice(0, 6)
+    : [];
+}
+
+function renderDressPalette(id, colors) {
+  const wrap = $(id);
+  wrap.replaceChildren();
+
+  colors.forEach((color) => {
+    const dot = document.createElement("span");
+    dot.className = "dress-color";
+    dot.style.backgroundColor = color;
+    dot.title = color.toUpperCase();
+    dot.setAttribute("aria-label", `Warna ${color.toUpperCase()}`);
+    wrap.appendChild(dot);
+  });
+}
+
+function renderDressCode(event) {
+  const title = String(event.dresscode_title || "").trim();
+  const note = String(event.dresscode_note || "").trim();
+  const maleColors = validDressColors(event.dresscode_male_colors);
+  const femaleColors = validDressColors(event.dresscode_female_colors);
+
+  const hasDressCode =
+    Boolean(title || note || maleColors.length || femaleColors.length);
+
+  const row = $("dresscodeRow");
+  const locationIndex = $("locationIndex");
+
+  if (!hasDressCode) {
+    row.classList.add("hidden");
+    locationIndex.textContent = "03";
+    return;
+  }
+
+  row.classList.remove("hidden");
+  locationIndex.textContent = "04";
+
+  setText("dressTitle", title);
+  setText("dressNote", note);
+
+  $("dressTitle").classList.toggle("hidden", !title);
+  $("dressNote").classList.toggle("hidden", !note);
+
+  const maleGroup = $("maleDressGroup");
+  const femaleGroup = $("femaleDressGroup");
+
+  maleGroup.classList.toggle("hidden", !maleColors.length);
+  femaleGroup.classList.toggle("hidden", !femaleColors.length);
+
+  renderDressPalette("malePalette", maleColors);
+  renderDressPalette("femalePalette", femaleColors);
+}
+
 async function loadEvent() {
   try {
     const response = await fetch(`/api/events?slug=${encodeURIComponent(slug)}`);
@@ -247,6 +308,8 @@ async function loadEvent() {
 
     setText("eventTime", event.event_time ? `${event.event_time} WITA` : "-");
     setText("eventLocation", event.location, "-");
+
+    renderDressCode(event);
 
     const mapsButton = $("mapsButton");
     const mapsUrl = String(event.maps_url || "").trim();
