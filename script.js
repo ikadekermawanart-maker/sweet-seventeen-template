@@ -4,13 +4,55 @@ const guest = (params.get("to") || "Tamu Undangan").trim().slice(0, 80);
 
 const $ = (id) => document.getElementById(id);
 
+let musicReady = false;
+
 $("guestName").textContent = guest;
 $("commentName").value = guest;
 
-$("openInvitation").addEventListener("click", () => {
+function setMusicState(isPlaying) {
+  const button = $("musicToggle");
+  if (!button) return;
+
+  button.classList.toggle("is-playing", isPlaying);
+  button.setAttribute("aria-label", isPlaying ? "Pause musik" : "Play musik");
+  button.title = isPlaying ? "Pause musik" : "Play musik";
+}
+
+async function tryPlayMusic() {
+  if (!musicReady) return;
+
+  try {
+    await $("bgMusic").play();
+    setMusicState(true);
+  } catch (error) {
+    setMusicState(false);
+  }
+}
+
+$("openInvitation").addEventListener("click", async () => {
   $("content").classList.remove("hidden");
   $("content").scrollIntoView({ behavior: "smooth" });
+
+  // Browser mengizinkan audio karena ini dipicu langsung oleh klik pengguna.
+  await tryPlayMusic();
 });
+
+$("musicToggle").addEventListener("click", async () => {
+  if (!musicReady) return;
+
+  const music = $("bgMusic");
+
+  if (music.paused) {
+    await tryPlayMusic();
+  } else {
+    music.pause();
+    setMusicState(false);
+  }
+});
+
+$("bgMusic").addEventListener("play", () => setMusicState(true));
+$("bgMusic").addEventListener("pause", () => setMusicState(false));
+$("bgMusic").addEventListener("ended", () => setMusicState(false));
 
 function setText(id, value, fallback = "") {
   const el = $(id);
@@ -70,8 +112,6 @@ function cleanCoverName(event) {
   const raw = String(event.main_name || event.event_title || "").trim();
   if (!raw) return "VIONA";
 
-  // If the stored "main name" accidentally contains a birthday title,
-  // strip common birthday wording so the cover remains name-focused.
   const stripped = raw
     .replace(/\b\d+(st|nd|rd|th)?\b/gi, " ")
     .replace(/\b(sweet\s*seventeen|birthday|birthday party|party)\b/gi, " ")
@@ -90,7 +130,6 @@ function startCountdown(dateString, timeString) {
   const [year, month, day] = dateString.split("-").map(Number);
   const [hour, minute] = String(timeString || "00:00").split(":").map(Number);
 
-  // WITA = UTC+8
   const target = Date.UTC(year, month - 1, day, hour - 8, minute || 0, 0);
 
   let timer;
@@ -155,11 +194,9 @@ function renderGallery(items) {
     gallery.appendChild(figure);
   });
 
-  // Hero statement photo uses the first gallery image.
   $("statementPhoto").src = valid[0];
   $("statementPhotoSection").classList.remove("hidden");
 
-  // Closing uses the last gallery image.
   $("closingImage").src = valid[valid.length - 1];
   $("closingImage").style.display = "block";
 }
@@ -196,6 +233,7 @@ async function loadEvent() {
       setText("closingMonth", im);
       setText("closingYear", iy);
     }
+
     setText("closingName", event.main_name, event.event_title);
     setText("subtitle", event.subtitle);
     setText("description", event.description);
@@ -219,6 +257,22 @@ async function loadEvent() {
     } else {
       mapsButton.removeAttribute("href");
       mapsButton.classList.add("hidden");
+    }
+
+    const musicUrl = String(event.music_url || "").trim();
+    const music = $("bgMusic");
+    const musicToggle = $("musicToggle");
+
+    if (musicUrl) {
+      music.src = musicUrl;
+      music.loop = true;
+      musicReady = true;
+      musicToggle.classList.remove("hidden");
+    } else {
+      musicReady = false;
+      music.removeAttribute("src");
+      music.load();
+      musicToggle.classList.add("hidden");
     }
 
     if (event.cover_url) {
