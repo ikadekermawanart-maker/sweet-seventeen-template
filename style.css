@@ -1196,4 +1196,27 @@ button{cursor:pointer}
   box-shadow:0 1px 2px rgba(0,0,0,.05);
 }
 
-
+/* Dress Code — Color Names */
+.dress-palette{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 14px;
+}
+.dress-color-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+}
+.dress-color-chip .dress-color{
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  border-radius:50%;
+  border:1px solid rgba(30,25,22,.18);
+}
+.dress-color-chip .dress-color-name{
+  font-size:11px;
+  line-height:1.2;
+  color:var(--ink-soft);
+}
