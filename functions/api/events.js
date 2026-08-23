@@ -28,6 +28,10 @@ export async function onRequestGet(context) {
       location,
       maps_url,
       music_url,
+      dresscode_title,
+      dresscode_note,
+      dresscode_male_colors,
+      dresscode_female_colors,
       description,
       cover_url,
       gallery_urls,
@@ -42,6 +46,22 @@ export async function onRequestGet(context) {
   }
 
   row.gallery_urls = row.gallery_urls ? JSON.parse(row.gallery_urls) : [];
+
+  try {
+    row.dresscode_male_colors = row.dresscode_male_colors
+      ? JSON.parse(row.dresscode_male_colors)
+      : [];
+  } catch {
+    row.dresscode_male_colors = [];
+  }
+
+  try {
+    row.dresscode_female_colors = row.dresscode_female_colors
+      ? JSON.parse(row.dresscode_female_colors)
+      : [];
+  } catch {
+    row.dresscode_female_colors = [];
+  }
 
   return json({ event: row });
 }
