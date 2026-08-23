@@ -1017,3 +1017,73 @@ button{cursor:pointer}
   }
   .wish-card{padding:15px;border-radius:22px}
 }
+
+/* Sweet Seventeen Music Player */
+.music-toggle{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:999;
+  width:48px;
+  height:48px;
+  padding:0;
+  border:1px solid rgba(36,31,27,.14);
+  border-radius:50%;
+  background:rgba(255,250,246,.88);
+  color:#241f1b;
+  box-shadow:0 8px 26px rgba(0,0,0,.12);
+  backdrop-filter:blur(12px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  cursor:pointer;
+}
+.music-toggle.hidden{
+  display:none;
+}
+.music-icon{
+  font:400 18px/1 Georgia,serif;
+}
+.music-bars{
+  width:12px;
+  height:16px;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  gap:2px;
+}
+.music-bars i{
+  width:2px;
+  height:6px;
+  border-radius:2px;
+  background:currentColor;
+  animation:musicBar .8s ease-in-out infinite alternate;
+}
+.music-bars i:nth-child(2){
+  height:12px;
+  animation-delay:.18s;
+}
+.music-bars i:nth-child(3){
+  height:8px;
+  animation-delay:.34s;
+}
+.music-toggle.is-playing .music-icon{
+  display:none;
+}
+.music-toggle.is-playing .music-bars{
+  display:flex;
+}
+@keyframes musicBar{
+  from{transform:scaleY(.45)}
+  to{transform:scaleY(1)}
+}
+@media(max-width:700px){
+  .music-toggle{
+    right:14px;
+    bottom:14px;
+    width:44px;
+    height:44px;
+  }
+}
+
